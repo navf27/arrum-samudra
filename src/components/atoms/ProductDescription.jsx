@@ -25,11 +25,14 @@ const ProductDescription = ({ data }) => {
       >
         <div>
           <h2 className="text-xl font-extrabold">
-            {data?.price === 0
+            {data?.category === "Craft"
+              ? `Mulai dari Rp ${data?.price.toLocaleString("id-ID")}`
+              : data?.price === 0
               ? "Rp -"
               : `Rp ${data?.price.toLocaleString("id-ID")}`}
           </h2>
         </div>
+
         <div>
           <div className="flex gap-1 items-center mt-1">
             <svg
@@ -163,9 +166,17 @@ const ProductDescription = ({ data }) => {
         </div>
         <div className="mt-3">
           <h4 className="text-sm font-semibold">Deskripsi</h4>
-          <p className="text-xs mt-1 text-justify leading-relaxed">
-            {data?.desc}
-          </p>
+          <p
+            className="text-xs mt-1 text-justify leading-relaxed whitespace-pre-line"
+            dangerouslySetInnerHTML={{
+              __html: data?.desc
+                ?.replace(/\n\n/g, "<br /><br />")
+                ?.replace(
+                  /<a /g,
+                  "<a style='color: #0795ff; text-decoration: none; font-size: 14px;' "
+                ),
+            }}
+          />
         </div>
       </div>
     </div>
